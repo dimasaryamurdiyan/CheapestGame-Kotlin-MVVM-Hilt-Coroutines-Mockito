@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,15 +14,18 @@ import com.ewide.test.dimasaryamurdiyan.data.Resource
 import com.ewide.test.dimasaryamurdiyan.databinding.FragmentGamesBinding
 import com.ewide.test.dimasaryamurdiyan.domain.model.Game
 import com.ewide.test.dimasaryamurdiyan.ui.base.BaseFragment
+import com.ewide.test.dimasaryamurdiyan.ui.bottomsheet.BottomSheetDialogSort
 import com.ewide.test.dimasaryamurdiyan.ui.detail.DetailGameActivity
 import com.ewide.test.dimasaryamurdiyan.ui.games.adapter.GameAdapter
+import com.ewide.test.dimasaryamurdiyan.utils.DelayedTextWatcher
+import com.ewide.test.dimasaryamurdiyan.utils.Sort
 import com.ewide.test.dimasaryamurdiyan.utils.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GamesFragment : BaseFragment() {
+class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
     private lateinit var binding: FragmentGamesBinding
     private lateinit var gameAdapter: GameAdapter
 
@@ -63,15 +67,12 @@ class GamesFragment : BaseFragment() {
 
     private fun onViewBind() {
         binding.apply {
-            etSearch.doAfterTextChanged { text ->
-                val data = text.toString()
-                lifecycleScope.launch {
-                    delay(SEARCH_DEBOUNCE_DURATION)
-                    if(data.isNotEmpty()) {
-                        viewModel.searchGame(data)
-                    }
-                }
-            }
+            
+            etSearch.addTextChangedListener(
+                DelayedTextWatcher(
+                    SEARCH_DEBOUNCE_DURATION, ::performSearch
+                )
+            )
 
             gameAdapter = GameAdapter(object : GameAdapter.OnClickListener{
                 override fun onClickItem(item: Game) {
@@ -87,7 +88,17 @@ class GamesFragment : BaseFragment() {
                 setHasFixedSize(true)
                 adapter = gameAdapter
             }
+
+            fab.setOnClickListener {
+                BottomSheetDialogSort.newInstance(
+                    this@GamesFragment
+                ).show(childFragmentManager, BottomSheetDialogSort.TAG)
+            }
         }
+
+    }
+
+    private fun performSearch(s: String) {
 
     }
 
@@ -98,6 +109,20 @@ class GamesFragment : BaseFragment() {
 
     companion object{
         const val SEARCH_DEBOUNCE_DURATION = 300L
+    }
+
+    override fun onItemClick(sortType: Sort) {
+       when(sortType) {
+           Sort.ASC -> {
+               viewModel.sortedASC()
+           }
+           Sort.DESC -> {
+               viewModel.sortedDESC()
+           }
+           Sort.DEFAULT -> {
+               viewModel.sortedASC()
+           }
+       }
     }
 
 }

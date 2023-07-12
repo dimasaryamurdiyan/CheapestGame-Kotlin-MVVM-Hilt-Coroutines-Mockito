@@ -4,4 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Cari..</string>
     <string name="hot_deals">Hot Deals</string>
+    <string name="default_sort">default</string>
+    <string name="ascending">ascending</string>
+    <string name="descending">descending</string>
+    <string name="sort">Urutkan</string>
 </resources>

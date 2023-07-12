@@ -9,7 +9,7 @@ interface GameDao {
     @Query("SELECT * FROM game")
     fun getAllGame(): Flow<List<GameEntity>>
 
-    @Query("SELECT * FROM game where isFavorite = 1")
+    @Query("SELECT * FROM game WHERE isFavorite = 1")
     fun getFavoriteGame(): Flow<List<GameEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -17,4 +17,10 @@ interface GameDao {
 
     @Update
     fun updateFavoriteGame(game: GameEntity)
+
+    @Query("SELECT * FROM game ORDER BY external ASC")
+    fun sortedASC(): Flow<MutableList<GameEntity>>
+
+    @Query("SELECT * FROM game ORDER BY external DESC")
+    fun sortedDESC(): Flow<MutableList<GameEntity>>
 }

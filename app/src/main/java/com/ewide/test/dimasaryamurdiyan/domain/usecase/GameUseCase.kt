@@ -10,4 +10,6 @@ interface GameUseCase {
     fun getDetailGame(gameId: Int): Flow<Resource<DetailGame>>
     fun setFavoriteGame(game: Game, state: Boolean)
     fun getFavoriteGame(): Flow<List<Game>>
+    fun getAllGameASC(): Flow<List<Game>>
+    fun getAllGameDESC(): Flow<List<Game>>
 }

@@ -19,4 +19,8 @@ class LocalDataSource @Inject constructor(private val gameDao: GameDao) {
     }
 
     fun getFavoriteGame(): Flow<List<GameEntity>> = gameDao.getFavoriteGame()
+
+    fun getAllGameSortedASC(): Flow<List<GameEntity>> = gameDao.sortedASC()
+
+    fun getAllGameSortedDESC(): Flow<List<GameEntity>> = gameDao.sortedDESC()
 }

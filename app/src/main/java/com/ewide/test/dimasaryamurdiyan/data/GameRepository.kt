@@ -69,4 +69,16 @@ class GameRepository @Inject constructor(
         }
     }
 
+    override fun getAllGameASC(): Flow<List<Game>> {
+        return localDataSource.getAllGameSortedASC().map {
+            DataMapper.mapEntitiesToDomain(it)
+        }
+    }
+
+    override fun getAllGameDESC(): Flow<List<Game>> {
+        return localDataSource.getAllGameSortedDESC().map {
+            DataMapper.mapEntitiesToDomain(it)
+        }
+    }
+
 }

@@ -23,4 +23,12 @@ class GameInteractor @Inject constructor(private val gameRepository: GameReposit
     override fun getFavoriteGame(): Flow<List<Game>> {
         return gameRepository.getFavoriteGame()
     }
+
+    override fun getAllGameASC(): Flow<List<Game>> {
+        return gameRepository.getAllGameASC()
+    }
+
+    override fun getAllGameDESC(): Flow<List<Game>> {
+        return gameRepository.getAllGameDESC()
+    }
 }
