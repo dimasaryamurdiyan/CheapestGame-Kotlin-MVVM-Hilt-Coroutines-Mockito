@@ -1,4 +1,4 @@
-package com.ewide.test.dimasaryamurdiyan.data.source.remote.response
+package com.ewide.test.dimasaryamurdiyan.data.source.remote.network
 
 sealed class ApiResponse<out R> {
     data class Success<out T>(val data: T) : ApiResponse<T>()

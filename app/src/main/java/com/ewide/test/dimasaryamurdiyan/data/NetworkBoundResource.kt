@@ -1,6 +1,6 @@
 package com.ewide.test.dimasaryamurdiyan.data
 
-import com.ewide.test.dimasaryamurdiyan.data.source.remote.response.ApiResponse
+import com.ewide.test.dimasaryamurdiyan.data.source.remote.network.ApiResponse
 import kotlinx.coroutines.flow.*
 
 abstract class NetworkBoundResource<ResultType, RequestType> {
