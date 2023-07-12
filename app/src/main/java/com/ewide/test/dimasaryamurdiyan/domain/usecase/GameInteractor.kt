@@ -31,4 +31,8 @@ class GameInteractor @Inject constructor(private val gameRepository: GameReposit
     override fun getAllGameDESC(): Flow<List<Game>> {
         return gameRepository.getAllGameDESC()
     }
+
+    override fun searchGame(title: String): Flow<List<Game>> {
+        return gameRepository.searchGame(title)
+    }
 }

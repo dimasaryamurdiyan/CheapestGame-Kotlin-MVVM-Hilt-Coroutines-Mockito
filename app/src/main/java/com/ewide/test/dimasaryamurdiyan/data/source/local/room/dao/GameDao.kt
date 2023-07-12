@@ -23,4 +23,7 @@ interface GameDao {
 
     @Query("SELECT * FROM game ORDER BY external DESC")
     fun sortedDESC(): Flow<MutableList<GameEntity>>
+
+    @Query("SELECT * FROM game WHERE external LIKE '%' || :name || '%' ")
+    fun searchGame(name: String): Flow<MutableList<GameEntity>>
 }

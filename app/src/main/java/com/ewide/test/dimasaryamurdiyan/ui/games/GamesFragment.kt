@@ -99,16 +99,12 @@ class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
     }
 
     private fun performSearch(s: String) {
-
+        viewModel.searchGame(s)
     }
 
     override fun onResume() {
         super.onResume()
         binding.etSearch.setText("")
-    }
-
-    companion object{
-        const val SEARCH_DEBOUNCE_DURATION = 300L
     }
 
     override fun onItemClick(sortType: Sort) {
@@ -123,6 +119,10 @@ class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
                viewModel.sortedASC()
            }
        }
+    }
+
+    companion object{
+        const val SEARCH_DEBOUNCE_DURATION = 300L
     }
 
 }

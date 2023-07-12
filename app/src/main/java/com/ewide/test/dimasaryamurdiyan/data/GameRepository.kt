@@ -81,4 +81,10 @@ class GameRepository @Inject constructor(
         }
     }
 
+    override fun searchGame(title: String): Flow<List<Game>> {
+        return localDataSource.searchGame(title).map {
+            DataMapper.mapEntitiesToDomain(it)
+        }
+    }
+
 }

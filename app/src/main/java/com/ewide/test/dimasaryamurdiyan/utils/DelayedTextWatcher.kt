@@ -1,28 +1,27 @@
 package com.ewide.test.dimasaryamurdiyan.utils
 
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import kotlinx.coroutines.*
 
 class DelayedTextWatcher(private val delayMillis: Long, private val onTextChanged: (String) -> Unit) :
     TextWatcher {
-    private val handler = Handler()
-    private var runnable: Runnable? = null
+    private var searchJob: Job? = null
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        // Not used in this example
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        // Cancel any pending execution of the runnable
-        runnable?.let { handler.removeCallbacks(it) }
+        // Cancel any existing search job
+        searchJob?.cancel()
 
-        // Create a new runnable with the specified delay
-        runnable = Runnable { onTextChanged(s.toString()) }
-        handler.postDelayed(runnable!!, delayMillis)
+        // Create a new search job with the specified delay
+        searchJob = CoroutineScope(Dispatchers.Main).launch {
+            delay(delayMillis)
+            onTextChanged(s.toString())
+        }
     }
 
     override fun afterTextChanged(s: Editable?) {
-        // Not used in this example
     }
 }

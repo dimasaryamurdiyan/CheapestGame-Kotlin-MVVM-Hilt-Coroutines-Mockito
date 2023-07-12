@@ -6,6 +6,7 @@ import com.ewide.test.dimasaryamurdiyan.domain.model.Game
 import com.ewide.test.dimasaryamurdiyan.domain.usecase.GameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,13 +16,21 @@ class GameViewModel @Inject constructor(val gameUseCase: GameUseCase): ViewModel
     val gameList: LiveData<Resource<List<Game>>> get() = _gameList
 
     init {
-        searchGame("bat")
+        getAllGame("bat")
+    }
+
+    private fun getAllGame(title: String) {
+        viewModelScope.launch {
+            gameUseCase.getAllGame(title).collect{
+                _gameList.postValue(it)
+            }
+        }
     }
 
     fun searchGame(title: String) {
         viewModelScope.launch {
-            gameUseCase.getAllGame(title).collect{
-                _gameList.postValue(it)
+            gameUseCase.searchGame(title).collect{
+                _gameList.postValue(Resource.Success(it))
             }
         }
     }

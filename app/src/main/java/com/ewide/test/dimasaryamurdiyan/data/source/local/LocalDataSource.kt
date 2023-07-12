@@ -23,4 +23,6 @@ class LocalDataSource @Inject constructor(private val gameDao: GameDao) {
     fun getAllGameSortedASC(): Flow<List<GameEntity>> = gameDao.sortedASC()
 
     fun getAllGameSortedDESC(): Flow<List<GameEntity>> = gameDao.sortedDESC()
+
+    fun searchGame(title: String): Flow<List<GameEntity>> = gameDao.searchGame(title)
 }

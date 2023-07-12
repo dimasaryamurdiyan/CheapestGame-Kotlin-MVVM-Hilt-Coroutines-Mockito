@@ -12,4 +12,5 @@ interface GameUseCase {
     fun getFavoriteGame(): Flow<List<Game>>
     fun getAllGameASC(): Flow<List<Game>>
     fun getAllGameDESC(): Flow<List<Game>>
+    fun searchGame(title: String): Flow<List<Game>>
 }
