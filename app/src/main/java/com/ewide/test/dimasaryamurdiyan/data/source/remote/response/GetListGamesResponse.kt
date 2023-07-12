@@ -18,7 +18,7 @@ class GetListGamesResponse : ArrayList<GetListGamesResponse.GetListGamesResponse
         @SerializedName("cheapestDealID")
         val cheapestDealID: String? = null,
         @SerializedName("external")
-        val `external`: String? = null,
+        val external: String? = null,
         @SerializedName("internalName")
         val internalName: String? = null,
         @SerializedName("thumb")
