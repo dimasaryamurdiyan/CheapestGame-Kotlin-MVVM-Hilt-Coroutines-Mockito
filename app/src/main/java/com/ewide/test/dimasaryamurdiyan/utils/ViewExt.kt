@@ -15,3 +15,7 @@ fun ImageView.loadImage(url: String) {
 fun Context.shortToast(message : CharSequence) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+fun Double.roundTo(n : Int) : Double {
+    return "%.${n}f".format(this).toDouble()
+}

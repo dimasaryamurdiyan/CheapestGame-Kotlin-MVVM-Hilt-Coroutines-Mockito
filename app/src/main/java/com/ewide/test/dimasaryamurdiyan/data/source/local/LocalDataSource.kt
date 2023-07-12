@@ -13,4 +13,9 @@ class LocalDataSource @Inject constructor(private val gameDao: GameDao) {
 
     suspend fun insertGame(gameList: List<GameEntity>) = gameDao.insertGame(gameList)
 
+    fun setFavoriteGame(game: GameEntity, newState: Boolean) {
+        game.isFavorite = newState
+        gameDao.updateFavoriteGame(game)
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.ewide.test.dimasaryamurdiyan.ui.games
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.ewide.test.dimasaryamurdiyan.data.Resource
 import com.ewide.test.dimasaryamurdiyan.databinding.FragmentGamesBinding
 import com.ewide.test.dimasaryamurdiyan.domain.model.Game
 import com.ewide.test.dimasaryamurdiyan.ui.base.BaseFragment
+import com.ewide.test.dimasaryamurdiyan.ui.detail.DetailGameActivity
 import com.ewide.test.dimasaryamurdiyan.ui.games.adapter.GameAdapter
 import com.ewide.test.dimasaryamurdiyan.utils.shortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,6 +77,9 @@ class GamesFragment : BaseFragment() {
                 override fun onClickItem(item: Game) {
                     binding.etSearch.setText("")
                     //navigate to detail screen
+                    val intent = Intent(activity, DetailGameActivity::class.java)
+                    intent.putExtra(DetailGameActivity.EXTRA_DATA, item)
+                    startActivity(intent)
                 }
             })
             with(rvGames){

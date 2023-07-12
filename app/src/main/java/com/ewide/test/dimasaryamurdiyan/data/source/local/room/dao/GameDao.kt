@@ -1,9 +1,6 @@
 package com.ewide.test.dimasaryamurdiyan.data.source.local.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.ewide.test.dimasaryamurdiyan.data.source.local.entity.GameEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,4 +11,7 @@ interface GameDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGame(game: List<GameEntity>)
+
+    @Update
+    fun updateFavoriteGame(game: GameEntity)
 }

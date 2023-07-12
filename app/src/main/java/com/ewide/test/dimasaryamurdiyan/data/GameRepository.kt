@@ -4,11 +4,13 @@ import com.ewide.test.dimasaryamurdiyan.data.source.local.LocalDataSource
 import com.ewide.test.dimasaryamurdiyan.data.source.remote.RemoteDataSource
 import com.ewide.test.dimasaryamurdiyan.data.source.remote.network.ApiResponse
 import com.ewide.test.dimasaryamurdiyan.data.source.remote.response.GetListGamesResponse
+import com.ewide.test.dimasaryamurdiyan.domain.model.DetailGame
 import com.ewide.test.dimasaryamurdiyan.domain.model.Game
 import com.ewide.test.dimasaryamurdiyan.domain.repository.IGameRepository
+import com.ewide.test.dimasaryamurdiyan.utils.AppExecutors
 import com.ewide.test.dimasaryamurdiyan.utils.DataMapper
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,6 +18,7 @@ import javax.inject.Singleton
 class GameRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
+    private val appExecutors: AppExecutors
 ): IGameRepository {
     override fun getAllGame(title: String): Flow<Resource<List<Game>>> =
         object : NetworkBoundResource<List<Game>, List<GetListGamesResponse.GetListGamesResponseItem>>() {
@@ -38,4 +41,26 @@ class GameRepository @Inject constructor(
                 localDataSource.insertGame(gameList)
             }
         }.asFlow()
+
+    override fun getDetailGame(gameId: Int): Flow<Resource<DetailGame>> =
+        flow {
+            emit(Resource.Loading())
+            when (val apiResponse = remoteDataSource.getDetailGame(gameId).first()) {
+                is ApiResponse.Success -> {
+                    emit(Resource.Success(DataMapper.mapResponsesToDomain(apiResponse.data)))
+                }
+                is ApiResponse.Error -> {
+                    emit(Resource.Error(apiResponse.errorMessage))
+                }
+                is ApiResponse.Empty -> {
+
+                }
+            }
+        }
+
+    override fun setFavoriteGame(game: Game, state: Boolean) {
+        val gameEntity = DataMapper.mapDomainToEntity(game)
+        appExecutors.diskIO().execute { localDataSource.setFavoriteGame(gameEntity, state) }
+    }
+
 }

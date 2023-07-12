@@ -3,6 +3,7 @@ package com.ewide.test.dimasaryamurdiyan.data.source.remote
 import android.util.Log
 import com.ewide.test.dimasaryamurdiyan.data.source.remote.network.ApiResponse
 import com.ewide.test.dimasaryamurdiyan.data.source.remote.network.ApiService
+import com.ewide.test.dimasaryamurdiyan.data.source.remote.response.GetDetailGameResponse
 import com.ewide.test.dimasaryamurdiyan.data.source.remote.response.GetListGamesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,22 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     emit(ApiResponse.Empty)
                 }
             } catch (e : Exception){
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getDetailGame(gameId: Int): Flow<ApiResponse<GetDetailGameResponse>> {
+        return flow {
+            try {
+                val response = apiService.getDetailGame(id = gameId)
+                if (response.info != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            }catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
                 Log.e("RemoteDataSource", e.toString())
             }
