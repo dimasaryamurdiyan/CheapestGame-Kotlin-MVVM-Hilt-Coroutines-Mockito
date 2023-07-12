@@ -15,6 +15,6 @@ abstract class BaseActivity : AppCompatActivity()  {
 
     fun showLoading() {
         hideLoading()
-        progressDialog = Utils.showLoadingDialog(applicationContext)
+        progressDialog = Utils.showLoadingDialog(this)
     }
 }
