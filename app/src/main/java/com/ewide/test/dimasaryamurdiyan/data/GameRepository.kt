@@ -63,4 +63,10 @@ class GameRepository @Inject constructor(
         appExecutors.diskIO().execute { localDataSource.setFavoriteGame(gameEntity, state) }
     }
 
+    override fun getFavoriteGame(): Flow<List<Game>> {
+        return localDataSource.getFavoriteGame().map {
+            DataMapper.mapEntitiesToDomain(it)
+        }
+    }
+
 }
