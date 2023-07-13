@@ -31,7 +31,7 @@ Features/screen is placed in `ui` package. Here is the list of app feature packa
 - `nav_graph` : Nav graph used for main application flow.
 
 ## Technical Debts
-- need bump up coverage test for all class
+- need bump up coverage test for UI test
 
 ## Credits
 - **Dimas Arya Murdiyan** - dimasaryamurdiyan123@gmail.com
