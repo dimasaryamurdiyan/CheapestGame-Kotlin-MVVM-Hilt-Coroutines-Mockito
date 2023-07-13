@@ -1,5 +1,6 @@
 package com.ewide.test.dimasaryamurdiyan.ui.detail.adapter
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,14 +43,15 @@ class DealsAdapter(private val itemClick: OnClickListener): RecyclerView.Adapter
                 tvStoreName.text = Constants.productName[item.storeID?.toInt()]
                 tvDiscountPrecentage.apply {
                     visibility = if (savings == 0.00) View.GONE else View.VISIBLE
-                    text = savings.toString()
+                    text = savings.toString() + "%"
                     setBackgroundResource(R.drawable.bg_orange_rounded_4dp)
                 }
                 tvNormalPrice.apply {
+                    paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     visibility = if (savings == 0.00) View.GONE else View.VISIBLE
-                    text = item.retailPrice
+                    text = root.context.getString(R.string.price, item.retailPrice)
                 }
-                tvDiscountPrice.text = item.price
+                tvDiscountPrice.text = root.context.getString(R.string.price, item.price)
 
                 binding.root.setOnClickListener {
                     itemClick.onClickItem(item)

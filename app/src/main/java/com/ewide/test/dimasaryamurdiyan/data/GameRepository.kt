@@ -29,7 +29,7 @@ class GameRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Game>?): Boolean {
-                return true
+                return data.isNullOrEmpty()
             }
 
             override suspend fun createCall(): Flow<ApiResponse<List<GetListGamesResponse.GetListGamesResponseItem>>> {

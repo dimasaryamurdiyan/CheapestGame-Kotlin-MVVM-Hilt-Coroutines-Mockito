@@ -2,6 +2,8 @@ package com.ewide.test.dimasaryamurdiyan.di
 
 import android.content.Context
 import androidx.room.Room
+import com.ewide.test.dimasaryamurdiyan.data.source.local.preference.IPreference
+import com.ewide.test.dimasaryamurdiyan.data.source.local.preference.Preference
 import com.ewide.test.dimasaryamurdiyan.data.source.local.room.GameDatabase
 import com.ewide.test.dimasaryamurdiyan.data.source.local.room.dao.GameDao
 import com.ewide.test.dimasaryamurdiyan.utils.Constants
@@ -25,4 +27,12 @@ class DatabaseModule {
 
     @Provides
     fun provideTourismDao(database: GameDatabase): GameDao = database.gameDao()
+
+    @Provides
+    @PreferenceInfo
+    internal fun providePrefFileName(): String = Constants.PREF_FILE_NAME
+
+    @Provides
+    @Singleton
+    internal fun providePreference(preference: Preference): IPreference = preference
 }

@@ -50,9 +50,9 @@
         android:textColor="@color/black"
         android:textSize="11sp"
         android:textStyle="italic"
+        android:text="@string/cheapest_price_ever"
         app:layout_constraintStart_toEndOf="@+id/ivImage"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrice"
-        tools:text="cheapest price ever" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPrice"/>
 
     <TextView
         android:id="@+id/tvHotDeals"

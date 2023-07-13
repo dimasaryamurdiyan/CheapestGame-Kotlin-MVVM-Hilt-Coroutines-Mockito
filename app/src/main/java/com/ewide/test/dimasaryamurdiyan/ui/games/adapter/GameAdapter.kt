@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.ewide.test.dimasaryamurdiyan.R
 import com.ewide.test.dimasaryamurdiyan.databinding.ItemGamesBinding
 import com.ewide.test.dimasaryamurdiyan.domain.model.Game
 import com.ewide.test.dimasaryamurdiyan.utils.loadImage
@@ -37,8 +38,8 @@ class GameAdapter(private val itemClick: OnClickListener): RecyclerView.Adapter<
                 ivProfile.loadImage(
                     url = item.thumb ?: "",
                 )
-                tvName.text = item.internalName
-                tvPrice.text = item.cheapest
+                tvName.text = item.external
+                tvPrice.text = root.context.getString(R.string.price, item.cheapest)
 
                 binding.root.setOnClickListener {
                     itemClick.onClickItem(item)

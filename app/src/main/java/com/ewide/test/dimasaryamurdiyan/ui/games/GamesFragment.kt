@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ewide.test.dimasaryamurdiyan.data.Resource
+import com.ewide.test.dimasaryamurdiyan.data.source.local.preference.IPreference
 import com.ewide.test.dimasaryamurdiyan.databinding.FragmentGamesBinding
 import com.ewide.test.dimasaryamurdiyan.domain.model.Game
 import com.ewide.test.dimasaryamurdiyan.ui.base.BaseFragment
@@ -21,8 +19,7 @@ import com.ewide.test.dimasaryamurdiyan.utils.DelayedTextWatcher
 import com.ewide.test.dimasaryamurdiyan.utils.Sort
 import com.ewide.test.dimasaryamurdiyan.utils.shortToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
@@ -30,6 +27,10 @@ class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
     private lateinit var gameAdapter: GameAdapter
 
     private val viewModel by viewModels<GameViewModel>()
+
+    @Inject
+    lateinit var preference: IPreference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,7 +68,9 @@ class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
 
     private fun onViewBind() {
         binding.apply {
-            
+
+            checkSortType()
+
             etSearch.addTextChangedListener(
                 DelayedTextWatcher(
                     SEARCH_DEBOUNCE_DURATION, ::performSearch
@@ -85,7 +88,7 @@ class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
             })
             with(rvGames){
                 layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
+                setHasFixedSize(false)
                 adapter = gameAdapter
             }
 
@@ -96,6 +99,20 @@ class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
             }
         }
 
+    }
+
+    private fun checkSortType() {
+        when(preference.getSortType()){
+            Sort.DEFAULT.toString() -> {
+                viewModel.sortedASC()
+            }
+            Sort.ASC.toString() -> {
+                viewModel.sortedASC()
+            }
+            Sort.DESC.toString() -> {
+                viewModel.sortedDESC()
+            }
+        }
     }
 
     private fun performSearch(s: String) {
@@ -111,12 +128,15 @@ class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
        when(sortType) {
            Sort.ASC -> {
                viewModel.sortedASC()
+               preference.setSortType(Sort.ASC.toString())
            }
            Sort.DESC -> {
                viewModel.sortedDESC()
+               preference.setSortType(Sort.DESC.toString())
            }
            Sort.DEFAULT -> {
                viewModel.sortedASC()
+               preference.setSortType(Sort.DEFAULT.toString())
            }
        }
     }

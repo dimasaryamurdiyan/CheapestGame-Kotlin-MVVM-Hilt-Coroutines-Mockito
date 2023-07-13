@@ -8,4 +8,6 @@
     <string name="ascending">ascending</string>
     <string name="descending">descending</string>
     <string name="sort">Urutkan</string>
+    <string name="price">$%s</string>
+    <string name="cheapest_price_ever">cheapest price ever</string>
 </resources>
