@@ -22,7 +22,7 @@ class GameViewModel @Inject constructor(
         getAllGame("bat")
     }
 
-    private fun getAllGame(title: String) {
+     fun getAllGame(title: String) {
         viewModelScope.launch {
             gameUseCase.getAllGame(title).collect{
                 _gameList.postValue(it)
