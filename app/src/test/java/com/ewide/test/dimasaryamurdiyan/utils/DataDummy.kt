@@ -3,6 +3,7 @@ package com.ewide.test.dimasaryamurdiyan.utils
 import com.ewide.test.dimasaryamurdiyan.data.source.local.entity.GameEntity
 import com.ewide.test.dimasaryamurdiyan.data.source.remote.response.GetDetailGameResponse
 import com.ewide.test.dimasaryamurdiyan.data.source.remote.response.GetListGamesResponse
+import com.ewide.test.dimasaryamurdiyan.domain.model.DetailGame
 import com.ewide.test.dimasaryamurdiyan.domain.model.Game
 
 object DataDummy {
@@ -128,6 +129,27 @@ object DataDummy {
         ),
         deals = listOf(
             GetDetailGameResponse.Deal(
+                storeID = "asasdada",
+                dealID = "asadada",
+                price = "45",
+                retailPrice = "52",
+                savings = "10.0"
+            )
+        )
+    )
+
+    val detailGameModel = DetailGame(
+        info = DetailGame.Info(
+            title = "BATMAN",
+            steamAppID = "asdsd",
+            thumb = "asdasdasd"
+        ),
+        cheapestPriceEver = DetailGame.CheapestPriceEver(
+            price = "456",
+            date = 12312414
+        ),
+        deals = listOf(
+            DetailGame.Deal(
                 storeID = "asasdada",
                 dealID = "asadada",
                 price = "45",
