@@ -10,4 +10,6 @@
     <string name="sort">Urutkan</string>
     <string name="price">$%s</string>
     <string name="cheapest_price_ever">cheapest price ever</string>
+    <string name="something_wrong">Something Went Wrong. Check your Internet Connection!</string>
+    <string name="no_data">No data found.</string>
 </resources>

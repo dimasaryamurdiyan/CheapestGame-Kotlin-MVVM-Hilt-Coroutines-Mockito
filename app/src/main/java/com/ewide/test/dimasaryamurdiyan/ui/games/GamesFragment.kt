@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ewide.test.dimasaryamurdiyan.R
 import com.ewide.test.dimasaryamurdiyan.data.Resource
 import com.ewide.test.dimasaryamurdiyan.data.source.local.preference.IPreference
 import com.ewide.test.dimasaryamurdiyan.databinding.FragmentGamesBinding
@@ -56,9 +57,15 @@ class GamesFragment : BaseFragment(), BottomSheetDialogSort.OnClickedListener {
                     is Resource.Success -> {
                         hideLoading()
                         gameAdapter.submitData(game.data)
+                        binding.viewEmpty.root.visibility = if (game.data?.isNotEmpty() == true) View.GONE else View.VISIBLE
                     }
                     is Resource.Error -> {
                         hideLoading()
+                        binding.viewError.apply {
+                            root.visibility = View.VISIBLE
+                            tvError.text = game.message ?: getString(R.string.something_wrong)
+                        }
+
                         requireContext().shortToast(game.message.toString())
                     }
                 }

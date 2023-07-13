@@ -44,6 +44,7 @@ class FavoriteFragment : Fragment() {
         viewModel.apply {
             gameList.observe(viewLifecycleOwner) { game ->
                 gameAdapter.submitData(game)
+                binding.viewEmpty.root.visibility = if (game.isNotEmpty()) View.GONE else View.VISIBLE
             }
         }
     }
