@@ -18,6 +18,17 @@ object DataDummy {
         isFavorite = false
     )
 
+    val gameEntity = GameEntity(
+        gameID = "1",
+        steamAppID = "a1213",
+        cheapest = "4545",
+        cheapestDealID = "asadad",
+        internalName = "Game1",
+        external = "Game 1",
+        thumb = "afkagkakag",
+        isFavorite = false
+    )
+
     val localGames = listOf(
         Game(
             gameID = "1",
@@ -50,6 +61,28 @@ object DataDummy {
             external = "Game 1",
             thumb = "afkagkakag",
             isFavorite = true
+        ), GameEntity(
+            gameID = "2",
+            steamAppID = "a1213",
+            cheapest = "4545",
+            cheapestDealID = "asadad",
+            internalName = "Game1",
+            external = "Game 1",
+            thumb = "afkagkakag",
+            isFavorite = true
+        )
+    )
+
+    val gamesEntity = mutableListOf(
+        GameEntity(
+            gameID = "1",
+            steamAppID = "a1213",
+            cheapest = "4545",
+            cheapestDealID = "asadad",
+            internalName = "Game1",
+            external = "Game 1",
+            thumb = "afkagkakag",
+            isFavorite = false
         ), GameEntity(
             gameID = "2",
             steamAppID = "a1213",
